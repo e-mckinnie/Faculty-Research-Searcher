@@ -52,10 +52,7 @@ def search_website(url, search_words):
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Search a school\'s faculty website for specific research areas')
     parser.add_argument('--url', type=str, dest='url', help='School\'s faculty website', required=True)
-    parser.add_argument('--search-words', type=str, dest='search_words', nargs='+', help='specific words/phrases to search for, separate by commas', required=True)
+    parser.add_argument('--search-words', type=str, dest='search_words', nargs='+', help='specific words/phrases to search for, separate with spaces e.g. robotics AI ethics', required=True)
 
     args = parser.parse_args()
     search_website(args.url, args.search_words)
-
-    # main_url = 'https://ic.gatech.edu/content/artificial-intelligence-machine-learning'
-    # search_words = ['equity']
