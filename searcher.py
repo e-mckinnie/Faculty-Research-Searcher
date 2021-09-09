@@ -27,21 +27,19 @@ def search_page(url, search_words):
     except Exception:
         return False
     
+    page_text = individual_page.find_all("p")
     for word in search_words:
-        results = individual_page.find_all("p")
-        for x in results:
+        for x in page_text:
             if word.lower() in x.text.lower():
                 return True
     return False
     
-
 def search_prof(prof, search_words):
     urls = [prof.contents[0].contents[0]['href'], prof.contents[2].contents[0]['href']]
     for url in urls:
         word_found = search_page(url, search_words)
         if word_found:
             webbrowser.open(url, new=2)
-
 
 if __name__ == '__main__':
     main_url = 'https://ic.gatech.edu/content/artificial-intelligence-machine-learning'
