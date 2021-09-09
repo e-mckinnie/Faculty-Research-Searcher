@@ -1,4 +1,4 @@
-import re
+import argparse
 import requests
 import webbrowser
 from bs4 import BeautifulSoup
@@ -41,12 +41,21 @@ def search_prof(prof, search_words):
         if word_found:
             webbrowser.open(url, new=2)
 
-if __name__ == '__main__':
-    main_url = 'https://ic.gatech.edu/content/artificial-intelligence-machine-learning'
-    search_words = ['equity']
-    
-    all_profs_page = BeautifulSoup(requests.get(main_url).content, 'html.parser')
+def search_website(url, search_words):
+    all_profs_page = BeautifulSoup(requests.get(url).content, 'html.parser')
     profs = all_profs_page.find_all(is_professor)
 
     for prof in profs:
         search_prof(prof, search_words)
+
+
+if __name__ == '__main__':
+    parser = argparse.ArgumentParser(description='Search a school\'s faculty website for specific research areas')
+    parser.add_argument('--url', type=str, dest='url', help='School\'s faculty website', required=True)
+    parser.add_argument('--search-words', type=str, dest='search_words', nargs='+', help='specific words/phrases to search for, separate by commas', required=True)
+
+    args = parser.parse_args()
+    search_website(args.url, args.search_words)
+
+    # main_url = 'https://ic.gatech.edu/content/artificial-intelligence-machine-learning'
+    # search_words = ['equity']
